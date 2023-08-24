@@ -33,7 +33,9 @@ int _printf(const char *format, ...)
 			} else if (format[i + 1] == 'u')
 			{	unsigned int n = va_arg(args, unsigned int);
 				print_uint(n);
-
+			} else if (format[i + 1] == 'o')
+			{	unsigned int n = va_arg(args, unsigned int);
+				print_octal(n);
 			}
 		i++;
 		}

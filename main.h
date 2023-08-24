@@ -11,5 +11,6 @@ int _printf(const char *format, ...);
 void print_char(char c);
 void print_int(int n);
 void print_uint(unsigned int n);
+void print_octal(unsigned int n);
 int print_string(const char *str);
 #endif
