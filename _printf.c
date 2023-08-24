@@ -23,7 +23,7 @@ int _printf(const char *format, ...)
 			else if (format[i + 1] == 'c')
 			{	char c = va_arg(args, int);
 
-				write(1, &c, 1);
+				print_char(c);
 			} else if (format[i + 1] == 's')
 			{	const char *str = va_arg(args, const char *);
 				int k = 0;
@@ -43,7 +43,6 @@ int _printf(const char *format, ...)
 }
 
 	va_end(args);
-	write(1, "\n", 1);
 
 	return (n);
 }
