@@ -8,7 +8,7 @@
 
 int _printf(const char *format, ...)
 {
-	int n = 0;
+	int n = 0, strc = 0;
 	int i;
 	va_list args;
 
@@ -26,14 +26,10 @@ int _printf(const char *format, ...)
 				print_char(c);
 			} else if (format[i + 1] == 's')
 			{	const char *str = va_arg(args, const char *);
-				int k = 0;
-
-				while (str[k] != '\0')
-				{
-					write(1, &str[k], 1);
-					k++;
-					n++;
-				}
+				strc = print_string(str);
+			} else if (format[i + 1] == 'd' || format[i + 1] == 'i')
+			{	int n = va_arg(args, int);
+				print_int(n);
 			}
 		i++;
 		}
@@ -44,5 +40,5 @@ int _printf(const char *format, ...)
 
 	va_end(args);
 
-	return (n);
+	return (n + strc);
 }
