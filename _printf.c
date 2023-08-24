@@ -30,6 +30,10 @@ int _printf(const char *format, ...)
 			} else if (format[i + 1] == 'd' || format[i + 1] == 'i')
 			{	int n = va_arg(args, int);
 				print_int(n);
+			} else if (format[i + 1] == 'u')
+			{	unsigned int n = va_arg(args, unsigned int);
+				print_uint(n);
+
 			}
 		i++;
 		}
