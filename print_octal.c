@@ -1,33 +1,45 @@
 #include "main.h"
 
+
 /**
-* print_octal - prints char
-* @n: character to be printed
-*/
-void print_octal(unsigned int n)
+ * print_octal - Prints an unsigned number in octal notation
+ *
+ * @types: Lista of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width
+ * @precision: Precision specification
+ * @size: Size specifier
+ *
+ * Return: Number of chars printed
+ */
+int print_octal(va_list types, char buffer[],
+                int flags, int width, int precision, int size)
 {
-	char A[100];
-	int i, j, k, p;
-	char r, temp;
 
-	i = 0;
+    int i = BUFF_SIZE - 2;
+    unsigned long int num = va_arg(types, unsigned long int);
+    unsigned long int init_num = num;
 
-	while (n != 0)
-	{
-		r = n % 8;
-		A[i++] = r + '0';
-		n /= 8;
-	}
+    UNUSED(width);
 
-	for (j = 0, k = i - 1; j < i / 2; j++, k--)
-	{
-		temp = A[j];
-		A[j] = A[k];
-		A[k] = temp;
-	}
+    num = convert_size_unsgnd(num, size);
 
-	for (p = 0; p < i; p++)
-	{
-		write(1, &A[p], 1);
-	}
+    if (num == 0)
+        buffer[i--] = '0';
+
+    buffer[BUFF_SIZE - 1] = '\0';
+
+    while (num > 0)
+    {
+        buffer[i--] = (num % 8) + '0';
+        num /= 8;
+    }
+
+    if (flags & F_HASH && init_num != 0)
+        buffer[i--] = '0';
+
+    i++;
+
+    return (write_unsgnd(0, i, buffer, flags, width, precision, size));
 }

@@ -1,37 +1,38 @@
 #include "main.h"
 
 /**
-* print_uint - prints char
-* @n: character to be printed
-*/
-void print_uint(unsigned int n)
+ * print_unsigned - Prints an unsigned number
+ *
+ * @types: List a of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width
+ * @precision: Precision specification
+ * @size: Size specifier
+ *
+ * Return: Number of chars printed.
+ */
+int print_unsigned(va_list types, char buffer[],
+                   int flags, int width, int precision, int size)
 {
-char h, A[10];
-int i, j, k, p, flag2 = 0;
-char r, temp;
+    int i = BUFF_SIZE - 2;
+    unsigned long int num = va_arg(types, unsigned long int);
 
-if (n < 10)
-h = (char)n + '0';
-else
-{
-i = 0;
-while (n != 0)
-{
-r = n % 10;
-A[i++] = r + '0';
-n /= 10;
-}
-for (k = 0, p = i - 1; k < i / 2; k++, p--)
-{   temp = A[p];
-A[p] = A[k];
-A[k] = temp;
-}
-flag2 = 1;
-}
-if (flag2 == 1)
-{
-	for (j = 0; j < i; j++)
-		write(1, &A[j], 1);
-} else
-write(1, &h, 1);
+    num = convert_size_unsgnd(num, size);
+
+    if (num == 0)
+
+        buffer[i--] = '0';
+
+    buffer[BUFF_SIZE - 1] = '\0';
+
+    while (num > 0)
+    {
+        buffer[i--] = (num % 10) + '0';
+        num /= 10;
+    }
+
+    i++;
+
+    return (write_unsgnd(0, i, buffer, flags, width, precision, size));
 }
